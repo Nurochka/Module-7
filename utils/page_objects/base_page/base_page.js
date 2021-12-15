@@ -5,22 +5,22 @@ class BasePage{
         this.Menu = new Menu();
     };
     
-    wait(waitInMilliseconds) {
-        return browser.sleep(waitInMilliseconds);
+    async wait(waitInMilliseconds) {
+        await browser.sleep(waitInMilliseconds);
     };
 
     async getCurrenUrl() {
-        const currentUrl = browser.getCurrentUrl();        
+        const currentUrl = await browser.getCurrentUrl();        
         return currentUrl;
     };
 
     async getTitle() {
-        const currentTitle = browser.getTitle();        
+        const currentTitle = await browser.getTitle();        
         return currentTitle;
     };
 
-    open(url) {
-       return browser.get(url);
+    async open(url) {
+       await browser.get(url);
     };
 };
 

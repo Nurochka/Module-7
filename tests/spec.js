@@ -1,59 +1,43 @@
 const PageFactory = require("../utils/page_objects/pageFactory");
-const Menu = require("../utils/page_objects/base_page/menu");
 let EC = protractor.ExpectedConditions;
 
-describe("Bosch site testing", function(){
+describe("Bosch.com site testing", function(){
 
-    it('open bosch.com angular page', function(){
-        PageFactory.getPage("Home").open();
-        PageFactory.getPage("Home").CookieButton.click();
-        expect(browser.getTitle()).toEqual("Invented for life | Bosch Global");
-        browser.sleep(1000);
+    it('open bosch.com angular page', async function(){
+        await PageFactory.getPage("Home").open();
+        await PageFactory.getPage("Home").CookieButton.click();
+        await expect(browser.getTitle()).toEqual("Invented for life | Bosch Global");
     });
 
-    it('go to search "At home" products', function(){ 
-        PageFactory.getPage("Home").Menu.menuButton.click();  
+    it('go to search "At home" products', async function(){ 
+        await PageFactory.getPage("Home").Menu.menuButton.click();  
         browser.sleep(1000);      
-        PageFactory.getPage("Home").Menu.productsButton.click();
-        browser.sleep(1000);
-        PageFactory.getPage("Home").Menu.atHomeLink.click();
-        browser.sleep(1000);
-        expect(browser.getTitle()).toEqual("At home | Bosch Global");
-        //browser.sleep(1000);
+        await PageFactory.getPage("Home").Menu.productsButton.click();
+        await PageFactory.getPage("Home").Menu.atHomeLink.click();
+        await expect(browser.getTitle()).toEqual("At home | Bosch Global");        
     });
 
-    it('go to not angular https://www.bosch-home.by/ page', function(){
-        PageFactory.getPage("At Home").HomeAppliancesButton.click();  
-        browser.sleep(1000);
-        PageFactory.getPage("At Home").ContinentDropdown.click();
-        browser.sleep(1000);
-        PageFactory.getPage("At Home").selectContinent.clickElementByText("Europe");
-        browser.sleep(2000);
-        
-        PageFactory.getPage("At Home").CountryDropdown.click();
-        browser.sleep(2000);
-        PageFactory.getPage("At Home").selectCountry.clickElementByText("Belarus");
-        browser.sleep(5000);
-        
-        PageFactory.getPage("At Home").GoToHomeAppliancesButton.click();
-        browser.sleep(5000);            
-        let EC = protractor.ExpectedConditions;
+});
+
+describe("Searching for a product on regional https://www.bosch-home.by/ site", function(){
+
+    it('go to not angular https://www.bosch-home.by/ page', async function(){
+        await PageFactory.getPage("At Home").HomeAppliancesButton.click();  
+        await PageFactory.getPage("At Home").ContinentDropdown.click();
+        await PageFactory.getPage("At Home").selectContinent.clickElementByText("Europe");
+        await PageFactory.getPage("At Home").CountryDropdown.click();
+        await PageFactory.getPage("At Home").selectCountry.clickElementByText("Belarus");
+        await PageFactory.getPage("At Home").GoToHomeAppliancesButton.click();
         browser.wait(EC.urlContains('by'), 5000);
         browser.waitForAngularEnabled(false);
-        expect(browser.getTitle()).toContain("Беларусь");
-        browser.sleep(2000);                       
+        expect(browser.getTitle()).toContain("Беларусь");                         
     }); 
-
     
-    it('check there are 20 resutls on one page', function(){ 
-        PageFactory.getPage("Regional Page").SearchField.search('пылесос');
-        browser.sleep(1000);
-        PageFactory.getPage("Regional Page").SearchButton.click();
-        browser.sleep(1000);
-
-        let result = PageFactory.getPage("Search Result").SearchResults.getCount();
+    it('check there are 20 resutls on one page', async function(){ 
+        await PageFactory.getPage("Regional Page").SearchField.search('пылесос');
+        await PageFactory.getPage("Regional Page").SearchButton.click();
+        const result = PageFactory.getPage("Search Result").SearchResults.getCount();
         expect(result).toEqual(20);
-        browser.sleep(3000);
-    });
-    
+    });    
+
 });

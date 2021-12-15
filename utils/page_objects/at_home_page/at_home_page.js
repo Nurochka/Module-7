@@ -1,6 +1,6 @@
-const BasePage = require("../base_page/base_page");
-const Element = require("../base_elements/base_element");
-const Collection = require("../base_elements/base_collection");
+const BasePage = require("../base_page/base_page"),
+Element = require("../base_elements/base_element"),
+Collection = require("../base_elements/base_collection");
 
 class AtHomePage extends BasePage {
     constructor() {
@@ -15,8 +15,9 @@ class AtHomePage extends BasePage {
       this.selectCountry = new Collection("Country", "css", '[name="selectedCountry-{{$ctrl.businessActivityDetails.id}}"] option');  
       
     };
-    open() {
-      return super.open(this.url);
+
+    async open() {
+      await super.open(this.url);
     };
 };
 

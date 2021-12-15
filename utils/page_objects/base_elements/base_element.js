@@ -9,12 +9,12 @@ class Element {
             }
         this.elementName = elementName;}
     
-    click() {
-        return this.element.click();        
+    async click() {
+        await this.element.click();        
     };
 
-    search(text) {
-        return this.element.sendKeys(text);        
+    async search(text) {
+        await this.element.sendKeys(text);        
     };
 
     async getText() {
